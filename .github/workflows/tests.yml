@@ -3,9 +3,7 @@ name: Tests
 on:
   push:
     branches: [ master, dev ]
-# no need. All PRs will come from within the repo
-#  pull_request:
-#    branches: [ master, dev ]
+  pull_request:
 
 jobs:
   build:
