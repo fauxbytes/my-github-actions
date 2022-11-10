@@ -24,17 +24,14 @@ jobs:
       id: set-env
       run: |
         echo "target branch: ${{ github.base_ref }}"
-        if [ "${{ github.base_ref }}" = "test" ]; then
-          echo "name=env_name::canvas-test" >> $GITHUB_OUTPUT
-        elif [ "${{ github.base_ref }}" = "dev" ]; then
-          echo "name=env_name::canvas-dev" >> $GITHUB_OUTPUT
-        elif [ "${{ github.base_ref }}" = "staging" ]; then
-          echo "name=env_name::canvas-staging" >> $GITHUB_OUTPUT
-        elif [ "${{ github.base_ref }}" = "master" ]; then
-          echo "name=env_name::canvas-prod" >> $GITHUB_OUTPUT
-        else
-          echo "name=env_name::not-found" >> $GITHUB_OUTPUT
-        fi
+        case ${{ github.base_ref }} in 
+          test) v=test ;;
+          staging) v=staging ;;
+          master) v=prod ;;
+          dev) v=dev ;;
+          *) v=not-found
+        esac
+        echo "name=env_name::canvas-$v" >> $GITHUB_OUTPUT
     - name: test env
       run: |
         echo "output is: ${{steps.set-env.outputs.name}}"
