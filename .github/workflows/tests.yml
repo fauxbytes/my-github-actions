@@ -20,5 +20,19 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+    - run: |
+        echo "target branch: ${{ github.base_ref }}"
+#        if [ "${{ github.base_ref }}" = "refs/heads/test" ]; then
+#          echo "::set-output name=env_name::canvas-test"
+#        elif [ "${{ github.base_ref }}" = "refs/heads/development" ]; then
+#          echo "::set-output name=env_name::canvas-dev"
+#        elif [ "${{ github.base_ref }}" = "refs/heads/staging" ]; then
+#          echo "::set-output name=env_name::canvas-staging"
+#        elif [ "${{ github.base_ref }}" = "refs/heads/master" ]; then
+#          echo "::set-output name=env_name::canvas-prod"
+#        else
+#          echo "::set-output name=env_name::not-found"
+#        fi
+
     - run: npm ci
     - run: npm test
