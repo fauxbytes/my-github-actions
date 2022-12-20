@@ -6,4 +6,10 @@ jobs:
     steps:
       - name: my-step
         run: |
-          echo "triggered: github: {{ $github }}. job: {{ $job }}"
+          cat<<EOF 
+          triggered: 
+          GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME 
+          GITHUB_REF_NAME: $GITHUB_REF_NAME
+          GITHUB_BASE_REF: $GITHUB_BASE_REF
+          GITHUB_ACTION: $GITHUB_ACTION
+          EOF
