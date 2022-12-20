@@ -1,15 +1,14 @@
 name: events
-on: push
+on: push, pull_request
 jobs:
-  my-job:
+  on_event:
     runs-on: ubuntu-latest
     steps:
-      - name: my-step
+      - name: print-wk-info
         run: |
           cat<<EOF 
           triggered: 
           GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME 
           GITHUB_REF_NAME: $GITHUB_REF_NAME
           GITHUB_BASE_REF: $GITHUB_BASE_REF
-          GITHUB_ACTION: $GITHUB_ACTION
           EOF
