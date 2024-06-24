@@ -21,5 +21,21 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+    - name: set env
+      id: set-env
+      run: |
+        echo "target branch: ${{ github.base_ref }}"
+        case ${{ github.base_ref }} in 
+          test) v=test ;;
+          staging) v=staging ;;
+          master) v=prod ;;
+          dev) v=dev ;;
+          *) v=not-found
+        esac
+        echo "name=env_name::canvas-$v" >> $GITHUB_OUTPUT
+    - name: test env
+      run: |
+        echo "output is: ${{steps.set-env.outputs.name}}"
+
     - run: npm ci
     - run: npm test
